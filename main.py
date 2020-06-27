@@ -42,7 +42,7 @@ while run:
     mouse = pygame.mouse.get_pos()
 
     # mouse control
-    #total = int(translate(mouse[0], 0, width, 0, 200))
+    total = int(translate(mouse[0], 0, width, 0, 200))
 
     if total <= 0:
         total = 1
@@ -58,5 +58,5 @@ while run:
         a, b = get_position(i), get_position(i* factor)
         pygame.draw.line(screen, white, add_tuple(a, pos), add_tuple(b, pos), 1)
     pygame.display.update()
-    factor += 0.001
+    factor += 0.003
 pygame.quit()
