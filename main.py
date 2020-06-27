@@ -1,6 +1,8 @@
 import pygame
 import os
 import math
+import random
+import colorsys
 
 os.environ["SDL_VIDEO_CENTERED"]='1'
 
@@ -17,7 +19,11 @@ fps = 60
 total = 200
 pos = (width//2, height//2)
 radius = 500
-factor = 1
+colors = []
+factor = 0
+hue = 0
+def hsv2rgb(h,s,v):
+    return tuple(round(i * 255) for i in colorsys.hsv_to_rgb(h,s,v))
 
 def translate(value, min1, max1, min2, max2):
     return min2 + (max2 - min2)* ((value-min1)/(max1-min1))
@@ -49,14 +55,18 @@ while run:
 
     theta = 2 * math.pi/total
 
-
+    if hue > 1:
+            hue = 0
     for i in range(total):
         position = get_position(i)
-        pygame.draw.circle(screen, white, add_tuple(pos, position), 5)
+        colors.append((random.randint(0, 255),random.randint(0, 255),random.randint(0, 255)))
+        pygame.draw.circle(screen, white, add_tuple(pos, position), 10)
 
     for i in range(total):
         a, b = get_position(i), get_position(i* factor)
-        pygame.draw.line(screen, white, add_tuple(a, pos), add_tuple(b, pos), 1)
+        pygame.draw.line(screen, (hsv2rgb(hue, 1, 1)), add_tuple(a, pos), add_tuple(b, pos), 1)
     pygame.display.update()
-    factor += 0.003
+    factor += 0.002
+    hue += 0.001
+
 pygame.quit()
